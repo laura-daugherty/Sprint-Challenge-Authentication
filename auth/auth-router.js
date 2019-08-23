@@ -8,7 +8,7 @@ const secrets = require('../config/secrets');
 
 router.post('/register', (req, res) => {
   let user = req.body;
-  const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
+  const hash = bcrypt.hashSync(user.password, 10); 
   user.password = hash;
 
   Auth.add(user)
@@ -24,11 +24,10 @@ router.post('/login', (req, res) => {
   let { username, password } = req.body;
 
   Auth.findBy({ username })
-    .first() //without first() the user is returned but in an array
+    .first()
     .then(user => {
-      console.log("user", user)
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = generateToken(user); //<<<<<<<<<<<<<
+        const token = generateToken(user); 
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
@@ -45,8 +44,7 @@ router.post('/login', (req, res) => {
 
 function generateToken(user) {
   const payload = {
-    // subject is normally the user's id (who/what the token describes)
-    subject: user.id, // translates unto the "sub" property on the token
+    subject: user.id, 
     username: user.username,
   };
   const options = {
