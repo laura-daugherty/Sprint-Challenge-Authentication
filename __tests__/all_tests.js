@@ -27,8 +27,8 @@ describe("server", () => {
         request(server)
         .post("/api/auth/register")
         .send({
-          "username" : "laura3",
-          "password" : "laura3"
+          "username" : "laura1",
+          "password" : "laura1"
         })
         .then(res => {
           expect(res.status).toBe(201)
@@ -40,7 +40,10 @@ describe("server", () => {
       it("401 works", () => {
         request(server)
         .post("/api/auth/login")
-        .send()
+        .send({
+          "username" : "",
+          "password" : "",
+        })
         .then(res => {
           expect(res.status).toBe(401)
         })
